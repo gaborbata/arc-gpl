@@ -16,6 +16,7 @@
 	 Computer Innovations Optimizing C86
 */
 #include <stdio.h>
+#include <unistd.h>
 #include "arc.h"
 #if	_MTS
 #include <ctype.h>
@@ -126,6 +127,8 @@ pack(f, t, hdr)			/* pack file into an archive */
 		}
 		hdrver = 2;	/* note packing method */
 		fseek(t, tloc, 0);	/* reset output for new method */
+		if (ftruncate(fileno(t), tloc) != 0) /* truncate file to original start of output */
+			arcdie("could not truncate temp file");
 		if (nocomp || (stdlen > MYBUF)) {
 			stdlen = crcval = 0;
 			while ((inbytes = getbuf(f)) != 0)
@@ -142,6 +145,8 @@ pack(f, t, hdr)			/* pack file into an archive */
 		hdrver = 3;	/* note packing method */
 		hdr->size = ncrlen;	/* set data length */
 		fseek(t, tloc, 0);	/* reset output for new method */
+		if (ftruncate(fileno(t), tloc) != 0) /* truncate file to original start of output */
+			arcdie("could not truncate temp file");
 		if (stdlen > MYBUF) {
 			do {
 				inbytes = getbuf(f);
@@ -157,6 +162,8 @@ pack(f, t, hdr)			/* pack file into an archive */
 		}
 		hdrver = 4;	/* note packing method */
 		fseek(t, tloc, 0);	/* reset output for new method */
+		if (ftruncate(fileno(t), tloc) != 0) /* truncate file to original start of output */
+			arcdie("could not truncate temp file");
 		huflen = head_sq();
 		if (stdlen > MYBUF) {
 			do {

@@ -6,6 +6,7 @@
  */
 
 #include <stdio.h>
+#include <stdarg.h>
 #include <ctype.h>
 #include "arc.h"
 
@@ -225,11 +226,13 @@ upper(string)
 }
 /* VARARGS1 */
 VOID
-arcdie(s, arg1, arg2, arg3)
-	char           *s;
+arcdie(const char *s, ...)
 {
+	va_list args;
 	fprintf(stderr, "ARC: ");
-	fprintf(stderr, s, arg1, arg2, arg3);
+	va_start(args, s);
+	vfprintf(stderr, s, args);
+	va_end(args);
 	fprintf(stderr, "\n");
 #if	UNIX
 	perror("UNIX");

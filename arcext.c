@@ -151,6 +151,8 @@ extfile(hdr, path, prt)		/* extract a file */
 					printf("  Overwrite it (y/n)? ");
 					fflush(stdout);
 					dummy = fgets(buf, STRLEN, stdin);
+					/* artifice to prevent GCC message: warning: variable ‘dummy’ set but not used [-Wunused-but-set-variable] */
+					if (dummy == NULL) {};
 					*buf = toupper(*buf);
 					if (*buf == 'Y' || *buf == 'N')
 						break;

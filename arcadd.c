@@ -274,6 +274,8 @@ addfile(path, name, update, fresh)	/* add named file to archive */
 				printf("  Truncate to %s (y/n)? ", name);
 				fflush(stdout);
 				dummy = fgets(buf, STRLEN, stdin);
+				/* artifice to prevent GCC message: warning: variable ‘dummy’ set but not used [-Wunused-but-set-variable] */
+				if (dummy == NULL) {};
 				*buf = toupper(*buf);
 				if (*buf == 'Y' || *buf == 'N')
 					break;

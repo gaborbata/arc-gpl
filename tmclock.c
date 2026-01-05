@@ -21,7 +21,7 @@ extern long	timezone;	/* should be in <time.h>, but isn't on Sun */
 
 long	tzone;
 
-long
+time_t
 tmjuliandate( tm )
 struct tm *tm;
     {
@@ -48,16 +48,16 @@ struct tm *tm;
     b += (long) ( (double) year * 365.25 );
     b += (long) ( 30.6001 * ( (double) mon + 1.0 ) );
     jd = mday + b + 1720994.5;
-    return ( (long) jd );
+    return ( (time_t) jd );
     }
 
 
-long
+time_t
 tmsubdayclock( tm )
 struct tm *tm;
     {
     register int sec, min, hour;
-    register long result;
+    register time_t result;
 #if	BSD
     {
        struct timezone tzp;
@@ -80,12 +80,12 @@ struct tm *tm;
     }
 
 
-long
+time_t
 tmclock( tm )
 struct tm *tm;
     {
     register long jd, sdc;
-    long result;
+    time_t result;
 
     if ( ( jd = tmjuliandate( tm ) ) == -1L )
 	return ( -1L );

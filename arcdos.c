@@ -173,7 +173,7 @@ setstamp(f, date, time)		/* set a file's date/time stamp */
 	struct tm	tm;
 	struct timeval  tvp[2];
 	int	utimes();
-	long	tmclock();
+	time_t	tmclock();
 	tm.tm_sec = (time & 31) * 2;
 	tm.tm_min = (time >> 5) & 63;
 	tm.tm_hour = (time >> 11);

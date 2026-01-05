@@ -43,7 +43,7 @@ SYSTEM = -DSYSV=1
 OPT = -O -Wall
 # For MWC 3.0 on the Atari ST, use:
 #CFLAGS = -VCOMPAC -VPEEP
-CFLAGS = $(OPT) $(SYSTEM)
+CFLAGS += $(OPT) $(SYSTEM) -std=gnu17 $(CPPFLAGS)
 
 # GNU's gcc is very nice, if you've got it. Otherwise just cc.
 #CC = cgcc -mshort -mbaserel
@@ -68,10 +68,10 @@ MOBJ = marc.o arcdata.o arcdos.o arcio.o arcmatch.o arcmisc.o $(SYSVOBJ)
 all:	arc$(PROG) marc$(PROG)
 
 arc$(PROG):	$(OBJS) $(TMCLOCK)
-	$(CC) $(OPT) -o arc$(PROG) $(OBJS) $(TMCLOCK) $(LIBS)
+	$(CC) $(OPT) -o arc$(PROG) $(OBJS) $(TMCLOCK) $(LIBS) $(LDFLAGS)
 
 marc$(PROG):	$(MOBJ) $(TMCLOCK)
-	$(CC) $(OPT) -o marc$(PROG) $(MOBJ) $(TMCLOCK) $(LIBS)
+	$(CC) $(OPT) -o marc$(PROG) $(MOBJ) $(TMCLOCK) $(LIBS) $(LDFLAGS)
 
 clean:
 	rm -f *.o arc$(PROG) marc$(PROG)
@@ -132,8 +132,8 @@ dist: clean
 	rm -rf .dist
 
 install: all
-	install -s -m 0755 -D arc $(DESTDIR)$(PREFIX)/bin/arc
-	install -s -m 0755 -D marc $(DESTDIR)$(PREFIX)/bin/marc
+	install -m 0755 -D arc $(DESTDIR)$(PREFIX)/bin/arc
+	install -m 0755 -D marc $(DESTDIR)$(PREFIX)/bin/marc
 	install -m 0644 -D arc.1 $(DESTDIR)$(PREFIX)/share/man/man1/arc.1
 	install -m 0644 -D marc.1 $(DESTDIR)$(PREFIX)/share/man/man1/marc.1
 

@@ -56,8 +56,8 @@ static VOID     putcode();
 
 extern u_char	*pinbuf;
 u_char		*inbeg, *inend;
-u_char          *outbuf;
-u_char          *outbeg, *outend; 
+extern u_char	*outbuf, *outend;
+u_char          *outbeg;
 
 static int      sp;		/* current stack pointer */
 static int	inflag;

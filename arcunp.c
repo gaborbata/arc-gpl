@@ -37,8 +37,8 @@ extern int	lastc;
 #define NOHIST 0		/* no relevant history */
 #define INREP 1			/* sending a repeated value */
 
-short    crcval;		/* CRC check value */
-long     stdlen;		/* bytes to read */
+extern short    crcval;		/* CRC check value */
+extern long     stdlen;		/* bytes to read */
 #if	!DOS
 static int	gotcr;		/* got a carriage return? */
 #endif
